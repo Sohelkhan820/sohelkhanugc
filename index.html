@@ -6,6 +6,18 @@
   <title>Sohel Khan — Scaling 7–8 Figure DTC Brands with High-Converting UGC</title>
   <meta name="description" content="Direct-Response & UGC Video Editor for 7 and 8-Figure DTC Brands. Engineered 3-second visual hooks, 1.3s retention pacing, and high-ROAS Meta & TikTok video ads." />
   
+  <!-- High-Priority Preconnects for Instant (<1.5s) Video & Thumbnail Playback -->
+  <link rel="preconnect" href="https://player.vimeo.com" crossorigin />
+  <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin />
+  <link rel="preconnect" href="https://f.vimeocdn.com" crossorigin />
+  <link rel="preconnect" href="https://vimeo.com" crossorigin />
+  <link rel="preconnect" href="https://vumbnail.com" crossorigin />
+  <link rel="preconnect" href="https://www.youtube.com" crossorigin />
+  <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+  <link rel="dns-prefetch" href="https://player.vimeo.com" />
+  <link rel="dns-prefetch" href="https://vumbnail.com" />
+  <link rel="dns-prefetch" href="https://i.ytimg.com" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -100,22 +112,21 @@
       aspect-ratio: 9 / 16;
     }
 
-    /* Touch-Friendly Snap Carousel */
-    .snap-carousel {
-      display: flex;
-      gap: 1.25rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      padding-bottom: 0.75rem;
-    }
-    .snap-card {
-      scroll-snap-align: start;
-      flex-shrink: 0;
+    /* Non-Black Shimmer Gradient Fallback for Video Posters */
+    .poster-fallback {
+      background: radial-gradient(circle at 50% 25%, #881337 0%, #1E293B 55%, #0F172A 100%);
     }
 
-    /* Flexible Floating Cursor Ring (lerp = 0.075 for graceful trailing distance) */
+    /* Hide scrollbar for clean mobile carousels */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Flexible Floating Cursor Ring (lerp = 0.08 for graceful trailing distance) */
     @media (hover: hover) and (pointer: fine) {
       .cursor-dot {
         position: fixed;
@@ -290,9 +301,9 @@
           <!-- Above-the-Fold Instant Contact Strip -->
           <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-textSlate pt-2 border-t border-slate-100">
             <span class="text-[11px] font-semibold text-textDark uppercase">Direct Access:</span>
-            <a href="mailto:Sohelkhan820680@gmail.com" class="hover:text-brandCoral flex items-center gap-1.5 transition">
+            <a href="mailto:sohelkhan820680@gmail.com" class="hover:text-brandCoral flex items-center gap-1.5 transition">
               <i class="fa-solid fa-envelope text-brandCoral"></i>
-              <span>Sohelkhan820680@gmail.com</span>
+              <span>sohelkhan820680@gmail.com</span>
             </a>
             <span class="text-slate-300 hidden sm:inline">•</span>
             <a href="https://wa.me/8801934844361" target="_blank" class="hover:text-emerald-600 flex items-center gap-1.5 transition">
@@ -303,48 +314,74 @@
 
         </div>
 
-        <!-- Right Column: Auto-Playing Vertical Ad Showcase (5 cols) -->
+        <!-- Right Column: Instant-Play Hero Vertical Ad Showcase (5 cols) -->
         <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[275px] sm:max-w-[305px] relative">
+          <div class="w-full max-w-[270px] sm:max-w-[305px] relative">
             
             <!-- Floating Callout Top-Left -->
-            <div class="absolute -top-3 -left-2 sm:-left-4 z-30 bg-white px-3 py-1.5 rounded-xl border border-borderRose shadow-card-clean flex items-center gap-2">
+            <div class="absolute -top-3 -left-2 sm:-left-4 z-30 bg-white px-3 py-1.5 rounded-xl border border-borderRose shadow-card-clean flex items-center gap-2 pointer-events-none">
               <span class="w-2 h-2 rounded-full bg-brandCoral animate-ping"></span>
-              <span class="font-mono text-[11px] font-bold text-brandCoral">0.2s Pattern Interrupt</span>
+              <span class="font-mono text-[10px] sm:text-[11px] font-bold text-brandCoral">0.2s Pattern Interrupt</span>
             </div>
 
             <!-- Floating Callout Bottom-Right -->
-            <div class="absolute -bottom-3 -right-2 sm:-right-4 z-30 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-card-clean flex items-center gap-2">
+            <div class="absolute -bottom-3 -right-2 sm:-right-4 z-30 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-card-clean flex items-center gap-2 pointer-events-none">
               <i class="fa-solid fa-bolt text-amber-500 text-xs"></i>
-              <span class="font-mono text-[11px] font-bold text-textDark">1.3s Visual Reset Pace</span>
+              <span class="font-mono text-[10px] sm:text-[11px] font-bold text-textDark">1.3s Visual Reset Pace</span>
             </div>
 
-            <!-- 9:16 Smartphone Frame with Live Muted Autoplay -->
-            <div class="aspect-9-16 rounded-[2.2rem] border-4 border-slate-900 ring-4 ring-rose-100 overflow-hidden relative bg-black shadow-2xl">
+            <!-- 9:16 Smartphone Frame with Instant Thumbnail + 1-Tap Inline Play -->
+            <div id="hero-player-slot" class="aspect-9-16 rounded-[2.2rem] border-4 border-slate-900 ring-4 ring-rose-100 overflow-hidden relative poster-fallback shadow-2xl group">
               
-              <!-- Real Auto-Playing Video #1: BioBlade -->
-              <iframe 
-                src="https://player.vimeo.com/video/1235504500?autoplay=1&muted=1&loop=1&autopause=0&background=1" 
-                class="w-full h-full object-cover pointer-events-none" 
-                allow="autoplay; fullscreen"
-                loading="eager"
-                title="BioBlade Direct-Response UGC Ad">
-              </iframe>
+              <!-- High-Res First-Frame Thumbnail (Visible in <100ms, Zero Black Screen) -->
+              <img 
+                data-vimeo-thumb="1235504500"
+                src="https://vumbnail.com/1235504500.jpg" 
+                alt="BioBlade Direct-Response UGC Ad" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                 fetchpriority="high"
+                onerror="this.style.opacity='0'"
+              />
 
-              <!-- Top Status Bar -->
-              <div class="absolute top-0 inset-x-0 p-3.5 bg-gradient-to-b from-black/80 via-black/30 to-transparent flex items-center justify-between pointer-events-none">
-                <span class="px-2 py-0.5 rounded-md bg-brandCoral text-white text-[10px] font-mono font-bold">
-                  WINNER #1 • LIVE CUT
-                </span>
-                <span class="text-[10px] font-mono text-white/90">BIOBLADE DTC</span>
-              </div>
+              <!-- Rich Contrast Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/60 flex flex-col justify-between p-3.5">
+                
+                <!-- Top Status Bar -->
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-0.5 rounded-md bg-brandCoral text-white text-[10px] font-mono font-bold shadow">
+                    WINNER #1 • BIOBLADE
+                  </span>
+                  <span class="px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-emerald-300 font-bold border border-white/10">
+                    +30% Lift
+                  </span>
+                </div>
 
-              <!-- Unmute & Inspect Trigger -->
-              <div class="absolute bottom-3 inset-x-3 z-20">
-                <button onclick="openVideoModal(1)" class="w-full py-2.5 px-3 rounded-xl bg-white/95 hover:bg-white text-textDark text-xs font-semibold backdrop-blur-md border border-slate-200 shadow-lg flex items-center justify-center gap-2 transition transform active:scale-95">
-                  <i class="fa-solid fa-volume-high text-brandCoral text-xs"></i>
-                  <span>Tap to Unmute &amp; Read Case Breakdown</span>
+                <!-- Center Instant Play Trigger -->
+                <div class="my-auto text-center space-y-2.5">
+                  <button 
+                    onclick="playInlineVideo('hero-player-slot', 1)" 
+                    aria-label="Play BioBlade Ad Instantly"
+                    class="w-16 h-16 mx-auto rounded-full bg-brandCoral hover:bg-brandCoralHover text-white flex items-center justify-center shadow-rose-glow border-2 border-white transform group-hover:scale-110 active:scale-95 transition">
+                    <i class="fa-solid fa-play text-lg ml-1"></i>
+                  </button>
+                  <span class="inline-block px-2.5 py-0.5 rounded-full bg-black/75 text-white font-mono text-[10px] border border-white/15">
+                    Tap for Instant Play w/ Sound 🔊
+                  </span>
+                  <div class="bg-black/80 backdrop-blur-md border border-white/20 rounded-xl p-2 mx-1">
+                    <p class="font-bold text-[11px] uppercase text-white leading-tight">
+                      "I DIDN'T EXPECT THIS FROM BIOBLADE..."
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Bottom Case Study Trigger -->
+                <button 
+                  onclick="openVideoModal(1)" 
+                  class="w-full py-2.5 px-3 rounded-xl bg-white/95 hover:bg-white text-textDark text-xs font-semibold border border-slate-200 shadow-lg flex items-center justify-center gap-1.5 transition active:scale-95">
+                  <i class="fa-solid fa-chart-line text-brandCoral text-xs"></i>
+                  <span>Read 3-Step Case Breakdown</span>
                 </button>
+
               </div>
 
             </div>
@@ -355,161 +392,83 @@
       </div>
     </section>
 
-    <!-- 2. TOP 3 FOCUS WINNERS: MUTED AUTOPLAY SPOTLIGHT CAROUSEL -->
+    <!-- 2. TOP 3 FOCUS WINNERS: INSTANT-PLAY MOBILE SWIPE CAROUSEL / DESKTOP 3-COL GRID -->
     <section class="space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200 pb-4">
         <div>
           <div class="inline-flex items-center gap-2 text-brandCoral font-mono text-xs uppercase tracking-widest font-bold">
             <i class="fa-solid fa-crown text-amber-500"></i>
-            <span>Primary Conversion Showcase • Muted Autoplay</span>
+            <span>Primary Conversion Showcase • Top 3 Focus Winners</span>
           </div>
           <h2 class="font-extrabold text-xl sm:text-3xl text-textDark tracking-tight mt-1">
             3 Flagship Ads That Stopped Scroll &amp; Scaled Spend
           </h2>
         </div>
-        <div class="text-xs font-mono text-textSlate">
-          Tap any card for audio + 3-step conversion breakdown →
+        <div class="text-xs font-mono text-textSlate flex items-center gap-1.5">
+          <i class="fa-solid fa-bolt text-brandCoral"></i>
+          <span>Tap Play for instant video or inspect the 3-step breakdown</span>
         </div>
       </div>
 
-      <!-- Horizontal Snap Carousel for Top 3 Focus Videos -->
-      <div class="snap-carousel">
-        
-        <!-- Focus #1: BioBlade -->
-        <div class="snap-card w-[265px] sm:w-[320px] bg-white rounded-3xl p-3.5 border-2 border-borderRose shadow-card-clean card-transition flex flex-col justify-between">
-          <div class="aspect-9-16 rounded-2xl overflow-hidden relative bg-black border border-slate-200">
-            <iframe 
-              src="https://player.vimeo.com/video/1235504500?autoplay=1&muted=1&loop=1&autopause=0&background=1" 
-              class="w-full h-full pointer-events-none" 
-              allow="autoplay; fullscreen"
-              loading="lazy"
-              title="BioBlade Direct-Response UGC Ad">
-            </iframe>
-            <div class="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-brandCoral text-white font-mono text-[10px] font-bold shadow-sm">
-              #1 WINNER • BIOBLADE
-            </div>
-            <button onclick="openVideoModal(1)" class="absolute inset-0 z-20 flex items-center justify-center bg-black/20 hover:bg-black/10 transition group">
-              <span class="w-12 h-12 rounded-full bg-brandCoral group-hover:scale-110 flex items-center justify-center text-white shadow-rose-soft transition">
-                <i class="fa-solid fa-play ml-0.5"></i>
-              </span>
-            </button>
-          </div>
-          <div class="pt-3 px-1 space-y-1">
-            <div class="flex items-center justify-between text-[11px] font-mono">
-              <span class="text-brandCoral font-bold">Skeptical Hook Angle</span>
-              <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+30% Conv. Lift</span>
-            </div>
-            <h3 class="font-bold text-xs sm:text-sm text-textDark line-clamp-1">I Didn’t Expect This From BioBlade…</h3>
-            <p class="text-[11px] text-textSlate line-clamp-2">0.2s pattern interrupt + macro blade demo that reversed ad fatigue.</p>
-          </div>
-        </div>
+      <!-- Mobile Touch-Snap Carousel & Desktop 3-Column Grid -->
+      <div id="top3-carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 md:grid md:grid-cols-3 md:gap-6 no-scrollbar">
+        <!-- Populated dynamically from the Top 3 Focus Videos (#1 BioBlade, #2 Lymphoria, #3 Gum Gel) -->
+      </div>
 
-        <!-- Focus #2: Lymphoria -->
-        <div class="snap-card w-[265px] sm:w-[320px] bg-white rounded-3xl p-3.5 border border-slate-200 shadow-card-clean card-transition flex flex-col justify-between">
-          <div class="aspect-9-16 rounded-2xl overflow-hidden relative bg-black border border-slate-200">
-            <iframe 
-              src="https://player.vimeo.com/video/1235504579?autoplay=1&muted=1&loop=1&autopause=0&background=1" 
-              class="w-full h-full pointer-events-none" 
-              allow="autoplay; fullscreen"
-              loading="lazy"
-              title="Lymphoria Lymphatic Drainage Review">
-            </iframe>
-            <div class="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-brandCoral text-white font-mono text-[10px] font-bold shadow-sm">
-              #2 WINNER • LYMPHORIA
-            </div>
-            <button onclick="openVideoModal(2)" class="absolute inset-0 z-20 flex items-center justify-center bg-black/20 hover:bg-black/10 transition group">
-              <span class="w-12 h-12 rounded-full bg-brandCoral group-hover:scale-110 flex items-center justify-center text-white shadow-rose-soft transition">
-                <i class="fa-solid fa-play ml-0.5"></i>
-              </span>
-            </button>
-          </div>
-          <div class="pt-3 px-1 space-y-1">
-            <div class="flex items-center justify-between text-[11px] font-mono">
-              <span class="text-brandCoral font-bold">Visual Proof Hook</span>
-              <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">High Cold Hold</span>
-            </div>
-            <h3 class="font-bold text-xs sm:text-sm text-textDark line-clamp-1">Lymphoria Lymphatic Drainage Review</h3>
-            <p class="text-[11px] text-textSlate line-clamp-2">Trimmed 4s of dead air; opened directly on jawline contour transformation.</p>
-          </div>
-        </div>
-
-        <!-- Focus #3: Gum Gel -->
-        <div class="snap-card w-[265px] sm:w-[320px] bg-white rounded-3xl p-3.5 border border-slate-200 shadow-card-clean card-transition flex flex-col justify-between">
-          <div class="aspect-9-16 rounded-2xl overflow-hidden relative bg-black border border-slate-200">
-            <iframe 
-              src="https://player.vimeo.com/video/1235504632?autoplay=1&muted=1&loop=1&autopause=0&background=1" 
-              class="w-full h-full pointer-events-none" 
-              allow="autoplay; fullscreen"
-              loading="lazy"
-              title="Gum Gel Treatment Explained">
-            </iframe>
-            <div class="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-brandCoral text-white font-mono text-[10px] font-bold shadow-sm">
-              #3 WINNER • GUM GEL
-            </div>
-            <button onclick="openVideoModal(3)" class="absolute inset-0 z-20 flex items-center justify-center bg-black/20 hover:bg-black/10 transition group">
-              <span class="w-12 h-12 rounded-full bg-brandCoral group-hover:scale-110 flex items-center justify-center text-white shadow-rose-soft transition">
-                <i class="fa-solid fa-play ml-0.5"></i>
-              </span>
-            </button>
-          </div>
-          <div class="pt-3 px-1 space-y-1">
-            <div class="flex items-center justify-between text-[11px] font-mono">
-              <span class="text-brandCoral font-bold">Mechanism Explainer</span>
-              <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Top CTR Winner</span>
-            </div>
-            <h3 class="font-bold text-xs sm:text-sm text-textDark line-clamp-1">Gum Gel Treatment Explained</h3>
-            <p class="text-[11px] text-textSlate line-clamp-2">Turned a clinical dental offer into a fast-paced problem-solution reel.</p>
-          </div>
-        </div>
-
+      <!-- Mobile Swipe Indicator Dots -->
+      <div class="flex md:hidden items-center justify-center gap-2 pt-1" id="top3-dots">
+        <span class="w-5 h-1.5 rounded-full bg-brandCoral transition-all"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-200 transition-all"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-200 transition-all"></span>
+        <span class="text-[10px] font-mono text-textMuted ml-1">Swipe →</span>
       </div>
     </section>
 
-    <!-- 3. THE FULL 20-VIDEO AD LIBRARY (EXACT SEQUENCE, ZERO STOCK IMAGES) -->
-    <section id="work" class="scroll-mt-20 space-y-6 sm:space-y-8">
+    <!-- 3. THE FULL 20-VIDEO AD LIBRARY (EXACT SEQUENCE, 2-COL MOBILE TIKTOK GRID) -->
+    <section id="work" class="scroll-mt-20 space-y-5 sm:space-y-8">
       
       <!-- Section Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 border-b border-slate-200 pb-4">
         <div>
           <div class="inline-flex items-center gap-2 text-brandCoral font-mono text-xs uppercase tracking-widest font-bold">
             <i class="fa-solid fa-fire"></i>
-            <span>Verified Production Vault • 20 Direct-Response Creatives</span>
+            <span>Verified Production Vault • All 20 Real Ads in Sequence</span>
           </div>
           <h2 class="font-extrabold text-2xl sm:text-4xl text-textDark tracking-tight mt-1">
             Every Cut Engineered to Beat Your Control Ad
           </h2>
         </div>
         <p class="text-textSlate text-xs sm:text-sm max-w-md font-normal">
-          Zero wedding reels. Zero fluff. Click any ad to watch with sound and inspect the <strong class="text-textDark">Bleed → Mechanism → Win</strong> breakdown.
+          Zero stock placeholders. Tap the <strong class="text-brandCoral">Play button</strong> to watch inline immediately, or tap <strong class="text-textDark">Case Study</strong> for the full conversion breakdown.
         </p>
       </div>
 
       <!-- Filter Tabs -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="work-filters">
-        <button onclick="filterVideos('all')" data-filter="all" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brandCoral text-white shadow-rose-soft transition">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="work-filters">
+        <button onclick="filterVideos('all')" data-filter="all" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brandCoral text-white shadow-rose-soft transition">
           All 20 Ads
         </button>
-        <button onclick="filterVideos('top3')" data-filter="top3" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition flex items-center gap-1.5">
+        <button onclick="filterVideos('top3')" data-filter="top3" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition flex items-center gap-1.5">
           <i class="fa-solid fa-crown text-amber-500"></i>
           <span>Top 3 Focus Winners</span>
         </button>
-        <button onclick="filterVideos('beauty')" data-filter="beauty" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
+        <button onclick="filterVideos('beauty')" data-filter="beauty" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
           DTC Beauty &amp; Skincare
         </button>
-        <button onclick="filterVideos('ai')" data-filter="ai" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition flex items-center gap-1.5">
+        <button onclick="filterVideos('ai')" data-filter="ai" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition flex items-center gap-1.5">
           <i class="fa-solid fa-wand-magic-sparkles text-brandCoral"></i>
           <span>AI E-Book Funnel (Parts 1–3)</span>
         </button>
-        <button onclick="filterVideos('commercial')" data-filter="commercial" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
+        <button onclick="filterVideos('commercial')" data-filter="commercial" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
           Commercial TVC &amp; 3D CGI
         </button>
-        <button onclick="filterVideos('highticket')" data-filter="highticket" class="filter-tab whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
+        <button onclick="filterVideos('highticket')" data-filter="highticket" class="filter-tab whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white border border-slate-200 text-textSlate hover:border-brandCoral transition">
           High-Ticket Offers &amp; Food ASMR
         </button>
       </div>
 
-      <!-- 20-Card Responsive Grid -->
-      <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <!-- 20-Card Responsive Grid (2 Columns on Smartphone like TikTok/Reels, 4 Columns on Desktop) -->
+      <div id="video-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
         <!-- Populated dynamically in exact 1-20 sequence -->
       </div>
 
@@ -891,7 +850,7 @@
             <div class="space-y-2.5 pt-2 text-xs sm:text-sm font-mono text-textSlate">
               <div class="flex items-center gap-3">
                 <i class="fa-solid fa-envelope text-brandCoral text-base w-5"></i>
-                <a href="mailto:Sohelkhan820680@gmail.com" class="hover:underline text-textDark font-semibold">Sohelkhan820680@gmail.com</a>
+                <a href="mailto:sohelkhan820680@gmail.com" class="hover:underline text-textDark font-semibold">sohelkhan820680@gmail.com</a>
               </div>
               <div class="flex items-center gap-3">
                 <i class="fa-brands fa-whatsapp text-emerald-500 text-base w-5"></i>
@@ -953,7 +912,7 @@
   </main>
 
   <!-- ULTRA-CLEAN MINIMALIST FOOTER (ONLY BRAND, SLOGAN, COPYRIGHT & 4 SOCIAL/CONTACT LINKS) -->
-  <footer class="border-t border-slate-200 py-10 bg-white">
+  <footer class="border-t border-slate-200 py-10 pb-24 md:pb-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         
@@ -980,7 +939,7 @@
             <i class="fa-brands fa-linkedin text-sm text-blue-600"></i>
             <span>LinkedIn</span>
           </a>
-          <a href="mailto:Sohelkhan820680@gmail.com" class="hover:text-brandCoral flex items-center gap-1.5 transition" title="Email">
+          <a href="mailto:sohelkhan820680@gmail.com" class="hover:text-brandCoral flex items-center gap-1.5 transition" title="Email">
             <i class="fa-solid fa-envelope text-sm text-brandCoral"></i>
             <span>Email</span>
           </a>
@@ -994,17 +953,29 @@
     </div>
   </footer>
 
+  <!-- STICKY MOBILE CONVERSION BAR (SMARTPHONE ONLY) -->
+  <div class="fixed bottom-0 inset-x-0 z-40 md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-200 px-3 py-2.5 flex items-center gap-2.5 shadow-2xl">
+    <a href="#contact" class="flex-1 py-2.5 px-3 rounded-xl bg-brandCoral text-white font-bold text-xs text-center shadow-rose-soft flex items-center justify-center gap-1.5 active:scale-95 transition">
+      <i class="fa-solid fa-paper-plane text-[10px]"></i>
+      <span>Send Ad Brief</span>
+    </a>
+    <a href="https://wa.me/8801934844361" target="_blank" class="py-2.5 px-4 rounded-xl bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition">
+      <i class="fa-brands fa-whatsapp text-sm"></i>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
   <!-- ==================== REDESIGNED 3-STEP COPYWRITER CASE STUDY MODAL ==================== -->
-  <div id="videoModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-5">
-    <div class="bg-white rounded-3xl max-w-4xl w-full p-4 sm:p-7 border border-borderRose shadow-2xl max-h-[94vh] overflow-y-auto">
+  <div id="videoModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-5">
+    <div class="bg-white rounded-3xl max-w-4xl w-full p-4 sm:p-7 border border-borderRose shadow-2xl max-h-[92vh] overflow-y-auto">
       
       <!-- Modal Header -->
-      <div class="flex items-start justify-between gap-3 border-b border-slate-200 pb-3.5 mb-5">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-200 pb-3.5 mb-4 sm:mb-5">
         <div>
           <span id="modal-tag" class="px-2.5 py-0.5 rounded-full bg-brandRoseTint text-brandCoral border border-borderRose font-mono text-[10px] font-bold uppercase">
             DTC CASE STUDY
           </span>
-          <h3 id="modal-title" class="font-extrabold text-base sm:text-xl text-textDark mt-1">
+          <h3 id="modal-title" class="font-extrabold text-sm sm:text-xl text-textDark mt-1 leading-snug">
             Video Title
           </h3>
         </div>
@@ -1014,12 +985,22 @@
       </div>
 
       <!-- Modal Content: Left 9:16 Video | Right 3-Step Conversion Copywriting Framework -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
         
-        <!-- 9:16 Live Player -->
+        <!-- 9:16 Live Player with Instant Loading Spinner -->
         <div class="md:col-span-5 flex justify-center">
-          <div class="w-60 sm:w-72 aspect-9-16 rounded-2xl border-4 border-slate-900 overflow-hidden relative shadow-2xl bg-black">
-            <iframe id="modal-iframe" class="w-full h-full border-0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <div class="w-56 sm:w-72 aspect-9-16 rounded-2xl border-4 border-slate-900 overflow-hidden relative shadow-2xl poster-fallback">
+            <div id="modal-spinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 z-10 text-white gap-2">
+              <div class="w-9 h-9 rounded-full border-3 border-brandCoral border-t-transparent animate-spin"></div>
+              <span class="font-mono text-[10px] text-rose-200">Loading HD Stream...</span>
+            </div>
+            <iframe 
+              id="modal-iframe" 
+              class="w-full h-full border-0 relative z-20" 
+              allow="autoplay; fullscreen; picture-in-picture" 
+              allowfullscreen
+              onload="document.getElementById('modal-spinner').classList.add('hidden')">
+            </iframe>
           </div>
         </div>
 
@@ -1482,7 +1463,179 @@
       }
     ];
 
-    // 2. RENDER ALL 20 VIDEO CARDS WITH REAL FIRST-FRAME EMBEDS & OFFICIAL YOUTUBE THUMBNAILS (ZERO STOCK PHOTOS)
+    // THUMBNAIL ENGINE: Instant Poster URL + Official Vimeo oEmbed CDN Auto-Upgrade
+    const vimeoThumbCache = {};
+
+    function getPosterUrl(v) {
+      if (v.type === 'youtube') {
+        return `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`;
+      }
+      return vimeoThumbCache[v.vimeoId] || `https://vumbnail.com/${v.vimeoId}.jpg`;
+    }
+
+    // Fetch official high-res Vimeo CDN thumbnails asynchronously so every Vimeo card is crystal clear
+    function hydrateVimeoThumbnails() {
+      const uniqueVimeoIds = [...new Set(videoDatabase.filter(v => v.type === 'vimeo').map(v => v.vimeoId))];
+      uniqueVimeoIds.forEach(vimeoId => {
+        fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
+          .then(res => res.ok ? res.json() : null)
+          .then(data => {
+            if (data && data.thumbnail_url) {
+              const hiResUrl = data.thumbnail_url.replace(/_\d+x\d+/, '_640');
+              vimeoThumbCache[vimeoId] = hiResUrl;
+              document.querySelectorAll(`img[data-vimeo-thumb="${vimeoId}"]`).forEach(img => {
+                img.src = hiResUrl;
+              });
+            }
+          })
+          .catch(() => {});
+      });
+    }
+
+    // SINGLE ACTIVE PLAYER ARCHITECTURE: Ensures 100% bandwidth goes to the 1 clicked video (<1.5s start)
+    let activeInlineSlotId = null;
+    let activeInlineHtmlBackup = '';
+
+    function stopAllActiveVideos() {
+      if (activeInlineSlotId) {
+        const prevSlot = document.getElementById(activeInlineSlotId);
+        if (prevSlot && activeInlineHtmlBackup) {
+          prevSlot.innerHTML = activeInlineHtmlBackup;
+          // Re-apply cached high-res thumbnail if available
+          prevSlot.querySelectorAll('img[data-vimeo-thumb]').forEach(img => {
+            const vid = img.getAttribute('data-vimeo-thumb');
+            if (vimeoThumbCache[vid]) img.src = vimeoThumbCache[vid];
+          });
+        }
+        activeInlineSlotId = null;
+        activeInlineHtmlBackup = '';
+      }
+    }
+
+    function playInlineVideo(slotId, videoDbId, event) {
+      if (event) event.stopPropagation();
+      const v = videoDatabase.find(item => item.id === videoDbId);
+      if (!v) return;
+
+      const slot = document.getElementById(slotId);
+      if (!slot) return;
+
+      // Unmount any previously playing inline video first
+      if (activeInlineSlotId && activeInlineSlotId !== slotId) {
+        stopAllActiveVideos();
+      }
+
+      activeInlineSlotId = slotId;
+      activeInlineHtmlBackup = slot.innerHTML;
+
+      const streamSrc = v.type === 'vimeo'
+        ? `${v.embedUrl}?autoplay=1&muted=0&playsinline=1&dnt=1&quality=auto&title=0&byline=0&portrait=0`
+        : `${v.embedUrl}?autoplay=1&mute=0&playsinline=1&rel=0`;
+
+      slot.innerHTML = `
+        <div class="w-full h-full relative bg-black flex flex-col justify-between">
+          <!-- Fast Loading Spinner Overlay (disappears on iframe onload) -->
+          <div id="spinner-${slotId}" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/90 text-white gap-2">
+            <div class="w-9 h-9 rounded-full border-3 border-brandCoral border-t-transparent animate-spin"></div>
+            <span class="font-mono text-[10px] text-rose-200">Starting Instant Stream...</span>
+          </div>
+
+          <iframe 
+            src="${streamSrc}" 
+            class="w-full h-full border-0 relative z-20" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen
+            onload="const sp = document.getElementById('spinner-${slotId}'); if(sp) sp.style.display='none';">
+          </iframe>
+
+          <!-- Top Close Inline Player Button -->
+          <button 
+            onclick="stopAllActiveVideos(); event.stopPropagation();" 
+            class="absolute top-2.5 right-2.5 z-30 w-7 h-7 rounded-full bg-black/80 hover:bg-brandCoral text-white text-xs flex items-center justify-center border border-white/20 shadow">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    // RENDER TOP 3 FOCUS WINNERS CAROUSEL (Instant Poster + 1-Tap Inline Play)
+    function renderTop3Spotlight() {
+      const container = document.getElementById('top3-carousel');
+      const top3 = videoDatabase.slice(0, 3);
+
+      container.innerHTML = top3.map((v, idx) => {
+        const slotId = `top3-slot-${v.id}`;
+        const poster = getPosterUrl(v);
+        return `
+          <div class="snap-start shrink-0 w-[82vw] max-w-[310px] md:w-auto md:max-w-none bg-white rounded-3xl p-3 sm:p-3.5 border-2 ${idx === 0 ? 'border-borderRose' : 'border-slate-200'} shadow-card-clean card-transition flex flex-col justify-between">
+            
+            <!-- 9:16 Instant Facade Frame -->
+            <div id="${slotId}" class="aspect-9-16 rounded-2xl overflow-hidden relative poster-fallback border border-slate-200 group">
+              <img 
+                data-vimeo-thumb="${v.vimeoId}"
+                src="${poster}" 
+                alt="${v.title}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                loading="eager"
+                onerror="this.style.opacity='0'"
+              />
+
+              <!-- Overlay Controls -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/55 p-3 flex flex-col justify-between">
+                <div class="flex items-center justify-between text-[10px] font-mono">
+                  <span class="px-2.5 py-0.5 rounded-full bg-brandCoral text-white font-bold shadow-sm">
+                    #${v.id} FOCUS WINNER
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full bg-white/95 text-emerald-700 font-bold shadow-sm">
+                    ${v.winStat}
+                  </span>
+                </div>
+
+                <!-- Instant Inline Play Button -->
+                <div class="my-auto text-center space-y-2">
+                  <button 
+                    onclick="playInlineVideo('${slotId}', ${v.id}, event)" 
+                    aria-label="Play ${v.title}"
+                    class="w-14 h-14 mx-auto rounded-full bg-brandCoral hover:bg-brandCoralHover text-white border-2 border-white flex items-center justify-center shadow-rose-glow transform group-hover:scale-110 active:scale-95 transition">
+                    <i class="fa-solid fa-play text-base ml-0.5"></i>
+                  </button>
+                  <div class="bg-black/80 backdrop-blur-md border border-white/20 rounded-xl p-2 mx-1">
+                    <p class="font-bold text-[10px] sm:text-[11px] uppercase text-white leading-tight">${v.caption}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] font-mono text-rose-200 bg-black/65 px-2.5 py-1.5 rounded-xl border border-white/10">
+                  <span>${v.hookStat}</span>
+                  <span class="text-white font-semibold">${v.paceStat}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="pt-3 px-1 space-y-2">
+              <h3 class="font-bold text-xs sm:text-sm text-textDark line-clamp-1">${v.title}</h3>
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <button 
+                  onclick="playInlineVideo('${slotId}', ${v.id}, event)" 
+                  class="py-2 px-2.5 rounded-xl bg-brandRoseTint hover:bg-brandCoral text-brandCoral hover:text-white font-semibold text-[11px] flex items-center justify-center gap-1.5 transition">
+                  <i class="fa-solid fa-play text-[9px]"></i>
+                  <span>Watch Now</span>
+                </button>
+                <button 
+                  onclick="openVideoModal(${v.id})" 
+                  class="py-2 px-2.5 rounded-xl bg-surfaceMuted hover:bg-slate-200 text-textDark font-semibold text-[11px] border border-slate-200 flex items-center justify-center gap-1 transition">
+                  <span>Case Study</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-brandCoral"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. RENDER ALL 20 VIDEO CARDS (2-COL MOBILE GRID + INSTANT POSTER + INLINE PLAY OR MODAL)
     function renderVideoCards(filterGroup = 'all') {
       const container = document.getElementById('video-grid');
       const filtered = filterGroup === 'all' 
@@ -1490,56 +1643,46 @@
         : videoDatabase.filter(v => v.filterGroup.includes(filterGroup));
 
       container.innerHTML = filtered.map(v => {
-        let mediaHtml = '';
-        if (v.type === 'vimeo') {
-          mediaHtml = `
-            <iframe 
-              src="https://player.vimeo.com/video/${v.vimeoId}?background=1&autoplay=0&loop=1&byline=0&title=0&muted=1#t=0.1s" 
-              class="w-full h-full object-cover pointer-events-none" 
-              loading="lazy" 
-              title="${v.title}">
-            </iframe>
-          `;
-        } else {
-          mediaHtml = `
-            <img 
-              src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" 
-              alt="${v.title}" 
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
-              loading="lazy" 
-            />
-          `;
-        }
+        const slotId = `grid-slot-${v.id}`;
+        const poster = getPosterUrl(v);
+        const vimeoAttr = v.type === 'vimeo' ? `data-vimeo-thumb="${v.vimeoId}"` : '';
 
         return `
-          <div onclick="openVideoModal(${v.id})" class="bg-white rounded-3xl p-3 border border-slate-200 shadow-card-clean card-transition cursor-pointer flex flex-col justify-between group">
+          <div class="bg-white rounded-2xl sm:rounded-3xl p-2 sm:p-3 border border-slate-200 shadow-card-clean card-transition flex flex-col justify-between group">
             
             <!-- 9:16 Vertical Ad Container -->
-            <div class="aspect-9-16 w-full rounded-2xl overflow-hidden relative mb-2.5 bg-slate-950 border border-slate-200">
+            <div id="${slotId}" onclick="playInlineVideo('${slotId}', ${v.id}, event)" class="aspect-9-16 w-full rounded-xl sm:rounded-2xl overflow-hidden relative mb-2 poster-fallback border border-slate-200 cursor-pointer">
               
-              ${mediaHtml}
+              <img 
+                ${vimeoAttr}
+                src="${poster}" 
+                alt="${v.title}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                loading="lazy"
+                onerror="this.style.opacity='0'"
+              />
 
               <!-- High-Contrast Direct-Response Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/55 p-3 flex flex-col justify-between">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/55 p-2 sm:p-3 flex flex-col justify-between">
                 
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="px-2 py-0.5 rounded-full bg-white/95 text-textDark font-bold shadow-sm">${v.tag}</span>
-                  <span class="px-2 py-0.5 rounded-full bg-brandCoral text-white font-bold shadow-sm">${v.winStat}</span>
+                <div class="flex items-center justify-between gap-1 text-[8px] sm:text-[10px] font-mono">
+                  <span class="px-1.5 sm:px-2 py-0.5 rounded-full bg-white/95 text-textDark font-bold shadow-sm truncate">${v.tag}</span>
+                  <span class="px-1.5 sm:px-2 py-0.5 rounded-full bg-brandCoral text-white font-bold shadow-sm shrink-0">${v.winStat}</span>
                 </div>
 
-                <div class="my-auto text-center space-y-2">
-                  <div class="w-11 h-11 mx-auto rounded-full bg-brandCoral border-2 border-white/90 flex items-center justify-center text-white group-hover:scale-110 shadow-rose-soft transition duration-300">
-                    <i class="fa-solid fa-play text-xs ml-0.5"></i>
+                <div class="my-auto text-center space-y-1.5 sm:space-y-2">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-brandCoral border-2 border-white/95 flex items-center justify-center text-white group-hover:scale-110 shadow-rose-soft transition duration-300">
+                    <i class="fa-solid fa-play text-xs sm:text-sm ml-0.5"></i>
                   </div>
-                  <div class="bg-black/80 backdrop-blur-md border border-white/20 rounded-xl p-2 mx-1 shadow-lg">
-                    <p class="font-bold text-[10px] sm:text-[11px] uppercase text-white leading-tight">${v.caption}</p>
+                  <div class="bg-black/80 backdrop-blur-md border border-white/20 rounded-lg sm:rounded-xl p-1.5 sm:p-2 mx-0.5 shadow-lg">
+                    <p class="font-bold text-[9px] sm:text-[11px] uppercase text-white leading-tight line-clamp-2">${v.caption}</p>
                   </div>
                 </div>
 
-                <div class="space-y-1 bg-black/65 backdrop-blur-sm p-2 rounded-xl border border-white/10">
-                  <div class="flex items-center justify-between text-[10px] font-mono text-slate-200">
-                    <span class="text-rose-300 font-semibold">${v.hookStat}</span>
-                    <span class="text-slate-300">${v.paceStat}</span>
+                <div class="space-y-1 bg-black/65 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg sm:rounded-xl border border-white/10">
+                  <div class="flex items-center justify-between text-[8px] sm:text-[10px] font-mono text-slate-200">
+                    <span class="text-rose-300 font-semibold truncate">${v.hookStat}</span>
+                    <span class="text-slate-300 hidden sm:inline">${v.paceStat}</span>
                   </div>
                   <div class="w-full h-1 bg-white/20 rounded-full overflow-hidden">
                     <div class="h-full bg-brandCoral w-2/3 group-hover:w-full transition-all duration-700"></div>
@@ -1550,15 +1693,17 @@
             </div>
 
             <!-- Card Footer -->
-            <div class="px-1 space-y-1">
-              <div class="flex items-center gap-1.5">
-                <span class="text-[10px] font-mono font-bold text-brandCoral">#${String(v.id).padStart(2, '0')}</span>
-                <h3 class="font-bold text-textDark text-xs sm:text-sm group-hover:text-brandCoral transition line-clamp-1">${v.title}</h3>
+            <div class="px-0.5 sm:px-1 space-y-1.5">
+              <div class="flex items-center gap-1">
+                <span class="text-[9px] sm:text-[10px] font-mono font-bold text-brandCoral shrink-0">#${String(v.id).padStart(2, '0')}</span>
+                <h3 class="font-bold text-textDark text-[11px] sm:text-sm group-hover:text-brandCoral transition line-clamp-1">${v.title}</h3>
               </div>
-              <div class="flex items-center justify-between text-[11px] font-mono text-textMuted pt-1 border-t border-slate-100">
-                <span>Inspect 3-Step Case Study</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-brandCoral text-[10px]"></i>
-              </div>
+              <button 
+                onclick="openVideoModal(${v.id})" 
+                class="w-full py-1.5 sm:py-2 px-2 rounded-lg sm:rounded-xl bg-surfaceMuted hover:bg-brandRoseTint text-textDark hover:text-brandCoral font-mono text-[9px] sm:text-[11px] font-semibold border border-slate-200/80 flex items-center justify-between transition">
+                <span>3-Step Case Study</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-brandCoral text-[9px]"></i>
+              </button>
             </div>
 
           </div>
@@ -1741,6 +1886,9 @@
 
     // 5. OPEN & CLOSE 3-STEP CASE STUDY MODAL
     function openVideoModal(id) {
+      // Stop any inline video so 100% of bandwidth powers the modal player
+      stopAllActiveVideos();
+
       const v = videoDatabase.find(item => item.id === id) || videoDatabase[0];
       
       document.getElementById('modal-tag').textContent = `AD #${String(v.id).padStart(2, '0')} • ${v.tag}`;
@@ -1759,11 +1907,14 @@
       document.getElementById('modal-hold-rate').textContent = v.paceStat;
       document.getElementById('modal-roas-num').textContent = v.winStat;
 
+      const spinner = document.getElementById('modal-spinner');
+      if (spinner) spinner.classList.remove('hidden');
+
       const iframe = document.getElementById('modal-iframe');
       if (v.type === 'vimeo') {
-        iframe.src = `${v.embedUrl}?autoplay=1&muted=0&title=0&byline=0&portrait=0`;
+        iframe.src = `${v.embedUrl}?autoplay=1&muted=0&playsinline=1&dnt=1&quality=auto&title=0&byline=0&portrait=0`;
       } else {
-        iframe.src = `${v.embedUrl}?autoplay=1&mute=0&rel=0`;
+        iframe.src = `${v.embedUrl}?autoplay=1&mute=0&playsinline=1&rel=0`;
       }
 
       document.getElementById('videoModal').classList.remove('hidden');
@@ -1826,9 +1977,27 @@
       if (e.key === 'Escape') closeVideoModal();
     });
 
+    // Update mobile swipe indicator dots on Top 3 Carousel scroll
+    const top3CarouselEl = document.getElementById('top3-carousel');
+    if (top3CarouselEl) {
+      top3CarouselEl.addEventListener('scroll', () => {
+        const scrollIndex = Math.round(top3CarouselEl.scrollLeft / (top3CarouselEl.clientWidth * 0.75));
+        const dots = document.querySelectorAll('#top3-dots span');
+        dots.forEach((dot, idx) => {
+          if (idx < 3) {
+            dot.className = idx === scrollIndex
+              ? 'w-5 h-1.5 rounded-full bg-brandCoral transition-all'
+              : 'w-1.5 h-1.5 rounded-full bg-rose-200 transition-all';
+          }
+        });
+      }, { passive: true });
+    }
+
     // Initialize Portfolio
     window.onload = function() {
+      renderTop3Spotlight();
       renderVideoCards('all');
+      hydrateVimeoThumbnails();
       switchHook(0);
       toggleComparison('edited');
     };
